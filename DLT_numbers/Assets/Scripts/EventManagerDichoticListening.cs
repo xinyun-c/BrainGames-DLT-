@@ -7,11 +7,14 @@ public class EventManagerDichoticListening : MonoBehaviour
     public AudioSource IntroAudio;
     public OVRCameraRig Player;
     public GameObject difficultyManager;
+    public GameObject game;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(PlayAudio(IntroAudio));
-        
+        //supposedly wait for player to set difficulty here
+        game.SetActive(true);
+
     }
     IEnumerator PlayAudio(AudioSource audioSource)
     {
