@@ -6,7 +6,6 @@ public class EventManagerDichoticListening : MonoBehaviour
 {
     public AudioSource IntroAudio;
     public OVRCameraRig Player;
-    public GameObject difficultyManager;
     public GameObject speaker1;
     public GameObject speaker2;
     // Start is called before the first frame update

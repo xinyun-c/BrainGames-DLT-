@@ -7,8 +7,11 @@ public class SpeakerTarget : MonoBehaviour
     public int target;
     public int last_num;
     public GameObject numberAudio;
+    public int iter;
+    public GameObject player;
     private List<AudioSource> audioList;
     private bool responded;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -19,18 +22,18 @@ public class SpeakerTarget : MonoBehaviour
     private void OnEnable()
     {
         audioList = numberAudio.GetComponent<NumberAudio>().audioList;
-        for (int i = 1; i <= 25; i++)
+        StartCoroutine(audioPlay(iter));
+    }
+
+    IEnumerator audioPlay(int num) {
+        for (int i = 1; i <= num; i++)
         {
             responded = false;
             SelectRandomNumber();
-            StartCoroutine(audioPlay(audioList[last_num]));
-
+            audioList[last_num].Play();
+            yield return new WaitForSeconds(audioList[last_num].clip.length + 1); // wait audioclip length time plus one second
         }
-    }
-
-    IEnumerator audioPlay(AudioSource num_audio) {
-        num_audio.Play();
-        yield return new WaitForSeconds(num_audio.clip.length + 1); // wait audioclip length time plus one second
+        
     }
 
     private void SelectRandomNumber() {
@@ -48,6 +51,7 @@ public class SpeakerTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        OVRInput.Get(OVRInput.Button.One);
+        Debug.Log("A button pressed.");
     }
 }
