@@ -8,8 +8,6 @@ public class EventManagerDichoticListening : MonoBehaviour
     public OVRCameraRig Player;
     public GameObject speaker1;
     public GameObject speaker2;
-    public int correctNumber;
-    public int incorrectNumber;
     public bool gameEnds;
     // Start is called before the first frame update
     void Start()
@@ -24,7 +22,6 @@ public class EventManagerDichoticListening : MonoBehaviour
         //supposedly wait for player to set difficulty here
         selectTarget();
         speaker1.SetActive(true);
-        speaker2.SetActive(true);
     }
 
     private void selectDifficulty() {
@@ -42,15 +39,13 @@ public class EventManagerDichoticListening : MonoBehaviour
     {
         if (gameEnds) {
             speaker1.SetActive(false);
-            speaker2.SetActive(false);
-            StartCoroutine(Result());
+            //StartCoroutine(Result());
         }
     }
-
+    
     IEnumerator Result()
     {
         //show'em the result!
-        IntroAudio.Play();
-        yield return new WaitForSeconds(IntroAudio.clip.length); // wait time
+        yield return new WaitForSeconds(0) ;
     }
 }
