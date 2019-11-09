@@ -9,6 +9,7 @@ public class SpeakerTarget : MonoBehaviour
     public GameObject numberAudio;
     public int iter;
     public GameObject player;
+    public GameObject manager;
     private List<AudioSource> audioList;
     private bool responded;
     
@@ -32,8 +33,18 @@ public class SpeakerTarget : MonoBehaviour
             SelectRandomNumber();
             audioList[last_num].Play();
             yield return new WaitForSeconds(audioList[last_num].clip.length + 1); // wait audioclip length time plus one second
+            if (responded == false) {
+                if (target != last_num)
+                {
+                    manager.GetComponent<EventManagerDichoticListening>().correctNumber += 1;
+                }
+                else {
+                    manager.GetComponent<EventManagerDichoticListening>().incorrectNumber += 1;
+                }
+            }
         }
-        
+        manager.GetComponent<EventManagerDichoticListening>().gameEnds = true;
+
     }
 
     private void SelectRandomNumber() {
@@ -51,7 +62,19 @@ public class SpeakerTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        OVRInput.Get(OVRInput.Button.One);
-        Debug.Log("A button pressed.");
+        if (!responded) {
+            if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, OVRInput.Controller.LTouch) >= 0.9)
+            {
+                Debug.Log("A button pressed.");
+                if (target == last_num)
+                {
+                    manager.GetComponent<EventManagerDichoticListening>().correctNumber += 1;
+                }
+                else {
+                    manager.GetComponent<EventManagerDichoticListening>().incorrectNumber += 1;
+                }
+                responded = true;
+            }
+        }
     }
 }

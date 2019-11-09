@@ -8,6 +8,9 @@ public class EventManagerDichoticListening : MonoBehaviour
     public OVRCameraRig Player;
     public GameObject speaker1;
     public GameObject speaker2;
+    public int correctNumber;
+    public int incorrectNumber;
+    public bool gameEnds;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +40,17 @@ public class EventManagerDichoticListening : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (gameEnds) {
+            speaker1.SetActive(false);
+            speaker2.SetActive(false);
+            StartCoroutine(Result());
+        }
+    }
+
+    IEnumerator Result()
+    {
+        //show'em the result!
+        IntroAudio.Play();
+        yield return new WaitForSeconds(IntroAudio.clip.length); // wait time
     }
 }
